@@ -23,6 +23,7 @@ Compiled .mod files should be taken outside the mechanisms file. Placed where th
    - Is the firing rate is between 1-15 Hz? If not change the alfa and experiment number, run the simulation again
    - Are the error for the fit and parameters smaller then 0.05? If not, use Recalculate_Parameters.py and calculate again by 
      changing the membrane potential interval. Find the best fit from with smallest error rate and save the graphs and outputs.
+   - If you want to see the plots, uncomment the lines for plotting inside EIF_Extraction_Faster.py. Also, inside the Recalculate_Parameters.py
 
 Files In This Kit:
 
