@@ -1,6 +1,8 @@
-# Oyku-Okur-s-EIF-Extraction-Kit-Faster-Version
-Faster version of this kit has the same principles and structure as before. With the improvements and new comments to make process faster, more simple, and easy to understand.
-Speed has been significantly improved, thus kit named "faster".
+# Oyku-Okur-s-EIF-Extraction-Kit
+See the Jupyter Notebooks for the results of EIF extraction for L5 TTPC2, UTPC, and STPC BBP cells. Data for UTPC is loaded in the /master branch to enable reproducibility
+of extraction process by using the Notebook. For the complete process of extraction (including the simulation of BBP cell) use the EIF kit and follow the steps below. 
+
+EIF extraction steps are replicated from Badel et al. (2008) in which steps are applied to L5 pyramidal neurons and performance of EIF models in capturing the spike timings of real neurons are shown. 
 
 This EIF Extraction Kit has 5 files that enables extracting parameters of EIF model (tau, V_resting, V_threshold, delta_t) from a BBP NEURON model.
 
@@ -17,13 +19,13 @@ Compilation should be done inside the "mechanisms" file of the cell file.
 Compiled .mod files should be taken outside the mechanisms file. Placed where the .py files are.
 
 4) Files found in this kit should be placed inside the cell file, together with "run.py" or .mod files that are transferred in the previous step.
-5) Open the Simulation_8Types_Faster.py. Insert the path of the cell, experiment number and alfa. Run the simulation. 
+5) Open the Simulation_8Types.py. Insert the path of the cell, experiment number and alfa. Run the simulation. 
 6) Wait for an hour for the simulation to finish. Have a cup of tea with your family and/or friends. 
 7) Check the .txt output file 
    - Is the firing rate is between 1-15 Hz? If not change the alfa and experiment number, run the simulation again
    - Are the error for the fit and parameters smaller then 0.05? If not, use Recalculate_Parameters.py and calculate again by 
      changing the membrane potential interval. Find the best fit from with smallest error rate and save the graphs and outputs.
-   - If you want to see the plots, uncomment the lines for plotting inside EIF_Extraction_Faster.py. Also, inside the Recalculate_Parameters.py
+   - If you want to see the plots, uncomment the lines for plotting inside EIF_Extraction.py. Also, inside the Recalculate_Parameters.py
 
 Files In This Kit:
 
@@ -32,7 +34,7 @@ Files In This Kit:
 
    It now has all 5 copies of L5 TTPC1, TTPC2, UTPC and STPC. You can add new cells and copies inside the dataframe by opening in Python. 
 
-*OU_Process.py is needed to generate Ornstein Uhlenbeck processes for the input. 
+*OU_process.py is needed to generate Ornstein Uhlenbeck processes for the input. 
 
    OU process is a noisy process where noise deviates from mean with standart deviation, but comes back to mean 
    with a time constant tau using the Brownian motion. 2 OU processes with mean 0 and standard deviations [[.18,.18],[.25,.36]] and tau = [3, 10 ms] 
@@ -42,7 +44,7 @@ Files In This Kit:
 
 No changes will be made to this file.
 
-*"EIF_Extraction_faster.py" has the function that extracts EIF parameters from the given neuron. 
+*"EIF_Extraction.py" has the function that extracts EIF parameters from the given neuron. 
    It follows the steps in the Badel et al., 2008. 
    Simulation injects generated OU process to NEURON cell for 40s after 300 ms transitory time. Injection is to the middle 
    of the soma and outputs obtained from the same spot. Output data is filtered (200 ms after each spike is discarded)
@@ -52,19 +54,19 @@ No changes will be made to this file.
    and saves the output array of simulation for further ivestigation.
 
    One needs to specify the cell type, alfa (amplitude of input, for the firing frequency range of interest), and the trial number to use this function. 
-   These parameters are changed inside the Simulation_8Types_Faster.py
+   These parameters are changed inside the Simulation_f.py
 
-*Cell type can be changed inside the "Simulation_8Types_Faster.py" file. Write the path of the cell by copying from cell folder directory.
+*Cell type can be changed inside the "Simulation_8Types.py" file. Write the path of the cell by copying from cell folder directory.
    When directory is changed, code recognizes the name of the cell and copy number. Inputs the name of the cell into EIF_Extraction function.
 
-   The directory should be changed manually inside the code in the format: home/user/other folders/layer_cell_type_copy/ e.g. home/ookur/newcells/L5_TTPC1_cADpyr232_2/
+   The directory should be changed manually inside the code in the format: home/user/other folders/layer_cell_type_copy/ e.g. home/ookur/newcells/L5_STPC_cADpyr232_1
    It should direct the function inside the cell folder where other .py and .pkl files are.
 
   -Alfa is set to 1. 
-   To increase or decrease the firing frequency it can be changed inside the "Simulation_8Types_spc.py" file.
+   To increase or decrease the firing frequency it can be changed inside the "Simulation_8Types.py" file.
 
   -Trial_no is set to 1. 
-   To prevent overwriting or deletion of the output files, it is important to increase the trial number for each experiment inside "Simulation_8Types_spc.py"
+   To prevent overwriting or deletion of the output files, it is important to increase the trial number for each experiment inside "Simulation_8Types.py"
 
 *Outputs of the simulation can be observed in .txt file with the name of the cell, copy number and experiment number.
 
