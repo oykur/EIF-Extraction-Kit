@@ -1,8 +1,8 @@
 from EIF_Extraction import extraction_EIF
 
 print("Before starting, please check if you downloaded, extracted and compiled the NEURON cell. Then check if the EIF_Extraction, Simulation_8Types, and OU_process.py codes, also the cells_df.pkl are all in the same file.")
-alfa = 2
-trial_no = 6
+alfa = 1
+trial_no = 1
 cell_path = "C:/newcells/L5_STPC_cADpyr232_1"  ## (e.g. /home/ookur/L5_TTPC2_cADpyr232_2/) : ")
 split_path = cell_path.split("/")
 while("" in split_path) :
