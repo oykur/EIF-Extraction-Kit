@@ -1,6 +1,5 @@
 # Oyku-Okur-s-EIF-Extraction-Kit
-See the Jupyter Notebooks for the results of EIF extraction for L5 TTPC2, UTPC, and STPC BBP cells. Data for UTPC is loaded in the /master branch to enable reproducibility
-of extraction process by using the Notebook. For the complete process of extraction (including the simulation of BBP cell) use the EIF kit and follow the steps below. 
+See the Jupyter Notebooks for the results of EIF extraction for Layer 5 (L5) TTPC2, UTPC and STPC Blue Brain Project (BBP) cells. Data for UTPC is loaded in the /master branch to enable reproducibility of extraction process by using the Notebook. For the complete process of extraction (including the simulation of BBP cell) use the EIF kit and follow the steps below. 
 
 EIF extraction steps are replicated from Badel et al. (2008) in which steps are applied to L5 pyramidal neurons and performance of EIF models in capturing the spike timings of real neurons are shown. 
 
@@ -20,7 +19,7 @@ Compiled .mod files should be taken outside the mechanisms file. Placed where th
 
 4) Files found in this kit should be placed inside the cell file, together with "run.py" or .mod files that are transferred in the previous step.
 5) Open the Simulation_8Types.py. Insert the path of the cell, experiment number and alfa. Run the simulation. 
-6) Wait for an hour for the simulation to finish. Have a cup of tea with your family and/or friends. 
+6) Wait for 1-2 hours for the simulation to finish. Have a cup of tea with your family and/or friends. 
 7) Check the .txt output file 
    - Is the firing rate is between 1-15 Hz? If not change the alfa and experiment number, run the simulation again
    - Are the error for the fit and parameters smaller then 0.05? If not, use Recalculate_Parameters.py and calculate again by 
@@ -39,8 +38,8 @@ Files In This Kit:
    OU process is a noisy process where noise deviates from mean with standart deviation, but comes back to mean 
    with a time constant tau using the Brownian motion. 2 OU processes with mean 0 and standard deviations [[.18,.18],[.25,.36]] and tau = [3, 10 ms] 
    are used in this simulation following the work of Badel et al., 2008. 
-   These processes are combinetd with 4 different DC currents [0, 0.02, 0.03, 0.06].
-   So, 4 DC currents combined with 2 couples of standart deviations, 8 different OU process are given to cell. 
+   These processes are combined with 4 different DC components [0, 0.02, 0.03, 0.06].
+   So, 4 DC components combined with 2 couples of standart deviations, = 8 different OU process are injected to the cell. 
 
 No changes will be made to this file.
 
@@ -68,10 +67,10 @@ No changes will be made to this file.
   -Trial_no is set to 1. 
    To prevent overwriting or deletion of the output files, it is important to increase the trial number for each experiment inside "Simulation_8Types.py"
 
-*Outputs of the simulation can be observed in .txt file with the name of the cell, copy number and experiment number.
+*Outputs of the simulation can be observed in .txt file named "output_params.txt"
 
-*I, V, dt, t, and I_m are stored as experiment array in .npy file with the name of the cell, copy number and experiment number.
-   They can be used in Recalculate_Parameters.py 
+*I, V, dt, t, and I_m are stored as experiment array (before filtering), and experiment array 2 (after filtering, containing I_m) in .npy files with the name of the cell, copy number and experiment number followed by "_exp_array.npy" and "_exp_array_2.npy" respectively.
+   Experiment array 2 can be used in Recalculate_Parameters.py 
    This will be useful since changing the range of the F(V) values can improve the accuracy of the fit. 
    If the performance of the fit is weak, then this code enables changing the range, seeing the graphs of interest (uncomment to visualize) 
    and obtaining new fits. Best fit can be used for further investigations.
