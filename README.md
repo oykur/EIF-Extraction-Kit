@@ -54,7 +54,7 @@ No changes will be made to this file.
    and saves the output array of simulation for further ivestigation.
 
    One needs to specify the cell type, alfa (amplitude of input, for the firing frequency range of interest), and the trial number to use this function. 
-   These parameters are changed inside the Simulation_f.py
+   These parameters are changed inside the Simulation_8Types.py
 
 *Cell type can be changed inside the "Simulation_8Types.py" file. Write the path of the cell by copying from cell folder directory.
    When directory is changed, code recognizes the name of the cell and copy number. Inputs the name of the cell into EIF_Extraction function.
