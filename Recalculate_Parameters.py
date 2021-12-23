@@ -8,23 +8,23 @@ from scipy.optimize import curve_fit
 from matplotlib import pyplot as plt  
 
 trial_no = 1
-name_files = "exp_array_h.cADpyr232_L5_TTPC2_a28017c6c7(0)_Trial_1.npy"  ## Insert the output file from extraction here
+name_files = "exp_array_STPC1_Trial_1_exp_array_2.npy"  ## Insert the output file from extraction here
 experiment_array_2 = np.load(str(name_files))
 
-C = 435  ## Insert the capacitance found by the extraction (written in .txt)
+C = 295  ## Insert the capacitance found by the extraction (written in .txt)
 experiment_array_2 = experiment_array_2[(experiment_array_2[:,4] > -17000)] ## Filter outliers
 
 ## Rest is the same steps with EIF_Extraction. Only difference is made by changing
 ## min_max_range and range_V intervals according to the performance of fit. 
 I_d = np.array([])
-min_max_range = np.arange(-90, -53.5, 0.5)  ## Change this interval
+min_max_range = np.arange(-105, -50.0, 0.5)  ## Change this interval
 # I_d = [] ## store I_d values, found by formula I_d = <I_m> (mean of I_m for little intervals such as V-1.5 mV to V+1.5 mV)
 i = 0
 while i < len(min_max_range)-1:
     V_interval = experiment_array_2[(experiment_array_2[:,0] > min_max_range[i]) & (experiment_array_2[:,0] < min_max_range[i+1])]
     I_d = np.append(I_d, np.mean(V_interval[:,4])) 
     i += 1
-range_V = np.arange((-89.75), (-53.75), 0.5) ## Change this interval according to min_max_range
+range_V = np.arange((-104.75), (-50.25), 0.5) ## Change this interval according to min_max_range
 range_V = range_V[~np.isnan(I_d)]
 I_d = I_d[~np.isnan(I_d)]
 
