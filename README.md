@@ -1,4 +1,4 @@
-# Oyku-Okur-s-EIF-Extraction-Kit
+# EIF-Extraction-Kit
 See the Jupyter Notebooks for the results of EIF extraction for Layer 5 (L5) TTPC2, UTPC and STPC Blue Brain Project (BBP) cells. Data for UTPC is loaded in the /master branch to enable reproducibility of extraction process by using the Notebook. For the complete process of extraction (including the simulation of BBP cell) use the EIF kit and follow the steps below. 
 
 EIF extraction steps are replicated from Badel et al. (2008) in which steps are applied to L5 pyramidal neurons and performance of EIF models in capturing the spike timings of real neurons are shown. 
