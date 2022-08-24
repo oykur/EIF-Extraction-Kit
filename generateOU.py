@@ -8,12 +8,12 @@
 
 #imported numpy and math module from python
 import numpy as np
-
+import random
 
 #definition of the function that generate a OU process with zero mean and unitary variance
 
 def generateOU (dt, tau, T):
-    
+    np.random.seed(10)
     x = np.zeros(int(T/dt)) # vector used to store the OU process
     
 # x is the OU process, the number of iterations id defined by the ratio of the simulation total time over the time step.  
