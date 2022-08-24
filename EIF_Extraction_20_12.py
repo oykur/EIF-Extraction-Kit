@@ -20,7 +20,7 @@ def extraction_EIF(cell_info, cell_path, alfa, trial_no):
     #cell= eval(cell_name) ## specify the cell here,
                                               ## can be found from run.py file of each cell
     
-    T, transient, h.dt = 40000, 300, 0.025      #ms - Simulation lifetime, same as in article
+    T, transient, h.dt = 40000, 3000, 0.025      #ms - Simulation lifetime, same as in article
                                                 #ms - Transitory time, same as article, used to be sure to be far away from the first 300 ms that are "unstable" it should have been 3000s, with no noise in the expertiment I need to measure the background noise; in a simulation I don't need since I injected the noise, and the cell doesn't need to relax after a stimulation. Anyway there are 300s of silence at the beginning and the end of each injection since the cell can reach the V_rest before the new injection
                                                 #ms - Integration time step, the highest as possible. It is the highest as possible using NEURON
     dt = h.dt
@@ -59,8 +59,8 @@ def extraction_EIF(cell_info, cell_path, alfa, trial_no):
         DC_inj, sigma_s, sigma_f, alfa = DC_sigma[exp_num-1][0], DC_sigma[exp_num-1][1], DC_sigma[exp_num-1][2], 1  # alfa: to obtain a firing frequency in the wanted range 1-15 Hz
                                                                             # total OU input is multiplied with the alfa
         stim.dur = T+transient*2                    #simulation lifetime
-        x = ou_proc(dt, tau_s, T, sigma_s, DC_inj)  # slow OU process generateOU.generateOU(dt, tau_s, T)#
-        y = ou_proc(dt, tau_f, T, sigma_f, DC_inj)  # fast ou process generateOU.generateOU(dt, tau_f, T)#
+        x = generateOU.generateOU(dt, tau_s, T)# ou_proc(dt, tau_s, T, sigma_s, DC_inj)  #slow OU process
+        y = generateOU.generateOU(dt, tau_f, T)# ou_proc(dt, tau_f, T, sigma_f, DC_inj)  # fast ou process
         print("\n the DC_ing value is:", DC_inj,"\t the alfa value is: ", alfa,  "\n")
         Iinj[int((transient)/dt):int((T+transient)/dt)] = alfa * (DC_inj+sigma_s*x+sigma_f*y)
     
@@ -197,7 +197,7 @@ def extraction_EIF(cell_info, cell_path, alfa, trial_no):
     # plt.xlabel('C_e (nF)',fontsize=15)
     # plt.savefig("find_c.png")
     
-    experiment_array_2 = experiment_array[(experiment_array[:,0] > -95) & (experiment_array[:,0] < -40)]
+    experiment_array_2 = experiment_array[(experiment_array[:,0] > -95) & (experiment_array[:,0] < -30)]
     
     inj_pA = experiment_array_2[:,1]*1000           ## I_inj converted from nA to pA
     dvdt_C = experiment_array_2[:,3]*C              ## for calculating I_ion = I_inj - dvdt*C
@@ -206,7 +206,7 @@ def extraction_EIF(cell_info, cell_path, alfa, trial_no):
                                                   ## add I_ion to last dataframe
         
     I_d = np.array([])
-    min_max_range = np.arange(-90, -39, 0.5)  ## from min to max, every V_m value with increment 0.5 mV
+    min_max_range = np.arange(-90, -29, 0.5)  ## from min to max, every V_m value with increment 0.5 mV
         # I_d = [] ## store I_d values, found by formula I_d = <I_m> (mean of I_m for little intervals such as V-1.5 mV to V+1.5 mV)
     i = 0
     while i < len(min_max_range)-1:
@@ -217,7 +217,7 @@ def extraction_EIF(cell_info, cell_path, alfa, trial_no):
     
     
     
-    range_V = np.arange((-89.75), (-39.25), 0.5) ## points of means
+    range_V = np.arange((-89.75), (-29.25), 0.5) ## points of means
     range_V = range_V[~np.isnan(I_d)]
     I_d = I_d[~np.isnan(I_d)]
     
@@ -282,12 +282,12 @@ def extraction_EIF(cell_info, cell_path, alfa, trial_no):
 
     # Save the results in a .txt file.
     
-    with open("output_params.txt", "a") as o:
+    with open("output_params_cr.txt", "w") as o:
         o.write("Experiment with " + str(exp_num)+ " types of input, DC and sigma = " + str(DC_sigma)
-                 + " stimulation time= " + str(T))
-        o.write("Results are: firing frequency in each stimulation= "+str(freqs)+" Capacitance = "+str(C)+
-                ", Parameters of the fit: tau= "+str(popt[0])+" ms, V_rest= " + str(popt[1])+" mV, V_thres= "+str(popt[2])+" mV, delta_t= "+ str(popt[3])+" mV"+
-                " and error of the fit is "+str(r_sq)+ " error for each parameter is" + str(np.diag(pcov)) + " Total time passed: " 
+                 + " stimulation time= " + str(T), "\n")
+        o.write(" \n Results are: firing frequency in each stimulation= "+str(freqs)+" Capacitance = "+str(C)+
+                "pF, \n Parameters of the fit: tau= "+str(popt[0])+" ms, V_rest= " + str(popt[1])+" mV, V_thres= "+str(popt[2])+" mV, delta_t= "+ str(popt[3])+" mV"+
+                " and error of the fit is "+str(r_sq)+ " \n error for each parameter is" + str(np.diag(pcov)) + "\n Total time passed: " 
                 + str(tm.time() - start_time))
     # Save the outputs
     # Saving just the experiment_df is enough since one can construct each result using the lines
